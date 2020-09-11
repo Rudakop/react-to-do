@@ -1,0 +1,71 @@
+.app {
+  padding: 30px;
+  height: 100vh;
+  font-family: "Arial Rounded MT Bold";
+  }
+.btn {
+    background-color: rgb(111, 217, 241);
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    justify-items: space-between;
+  }
+  
+.btn:hover {
+    background-color: rgb(179, 25, 179);
+  }
+  
+  
+.bgr-gradient-1 {
+  background: linear-gradient(135deg,
+    rgb(179, 25, 179) 0%,rgb(255,173,237) 50%,rgb(61,219,244) 100%);
+  }
+
+.input {
+  display: flex;
+  border: 5px solid rgb(0, 0, 0, 0);
+  font-family: "Arial Rounded MT Bold";
+  font-size: 1.2rem;
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+ }
+
+.list-title {
+  font-size: 1.4rem;
+  color: rgb(61, 29, 200);
+  text-transform: uppercase;
+  margin-bottom: 1.3rem;
+  text-align: center;
+  padding-top: 2.5rem;
+}
+
+.todo-list {
+  background: none;
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 60%;
+  display: center;
+  font-family: "Arial Rounded MT Bold";
+}
+
+.todo {
+  background: #fff;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.todo {
+  background: rgb(111, 217, 241);
+  color: #fff;
+}
+
