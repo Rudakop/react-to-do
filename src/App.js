@@ -4,14 +4,10 @@ import firebase from './utils/firebase'
 
 function Todo({ todo, index, completeTodo, removeTodo }) {
   return (
-    <div
-      className={todo.complete ? "complete" : "todo"}
-       /*style={{ textDecoration: todo.Complete ? "line-through" : "" }}*/
-    >
+    <div className={todo.complete ? "complete" : "todo"}>
       {todo.value}
-
       <div>
-                
+          
         <button className="btn" onClick={() => completeTodo(todo)}><link href='https://css.gg/check.css' rel='stylesheet'/>
         <i className="gg-check"></i></button>
 
