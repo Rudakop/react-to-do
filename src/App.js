@@ -1,12 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import firebase from './firebase'
-
-firebase.firestore().collection('times').add({
-title: 'blala',
-time_seconds: '45',
-})
-
+import firebase from './utils/firebase'
 
 function Todo({ todo, index, completeTodo, removeTodo }) {
   return (
@@ -32,13 +26,17 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
 
 function TodoForm({ addTodo }) {
   const [value, setValue] = useState("");
-
+  
   const handleSubmit = e => {
     e.preventDefault();
     if (!value) return;
+    const todoRef = firebase.database().ref('ToDo')
+    const todo = { value, complete: false}
+    todoRef.push(todo)
     addTodo(value);
     setValue("");
   };
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -53,6 +51,22 @@ function TodoForm({ addTodo }) {
 }
 
 function App() {
+  const [list, setList] = useState(null)
+  
+  
+  useEffect(() => {
+    const todoRef = firebase.database().ref('ToDo')
+    todoRef.on('value', snapshot => {
+      const todos = snapshot.val()
+      const todoList = []
+      for(let id in todos){
+        todoList.push(todos[id])
+      }
+      setList(todoList)
+    })
+  }, [])
+  
+
   const [todos, setTodos] = useState([
     {
       text: "To finish React project",
@@ -85,6 +99,8 @@ function App() {
     newTodos.splice(index, 1);
     setTodos(newTodos);
   };
+ console.log(list);
+
 
   return (
     <div className="bgr-gradient-1">
