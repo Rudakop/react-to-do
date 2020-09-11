@@ -62,10 +62,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.todo {
   background: rgb(111, 217, 241);
-  color: #fff;
 }
 
+.complete {
+  text-decoration: line-through;
+  background: rgb(111, 217, 241);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}

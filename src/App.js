@@ -5,17 +5,17 @@ import firebase from './utils/firebase'
 function Todo({ todo, index, completeTodo, removeTodo }) {
   return (
     <div
-      className="todo"
-      style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}
+      className={todo.complete ? "complete" : "todo"}
+       /*style={{ textDecoration: todo.Complete ? "line-through" : "" }}*/
     >
-      {todo.text}
+      {todo.value}
 
       <div>
                 
-        <button className="btn" onClick={() => completeTodo(index)}><link href='https://css.gg/check.css' rel='stylesheet'/>
+        <button className="btn" onClick={() => completeTodo(todo)}><link href='https://css.gg/check.css' rel='stylesheet'/>
         <i className="gg-check"></i></button>
 
-        <button className="btn" onClick={() => removeTodo(index)}><link href='https://css.gg/trash.css' rel='stylesheet'/>
+        <button className="btn" onClick={() => removeTodo(todo)}><link href='https://css.gg/trash.css' rel='stylesheet'/>
         <i className="gg-trash"></i></button>
         
       </div>
@@ -33,10 +33,8 @@ function TodoForm({ addTodo }) {
     const todoRef = firebase.database().ref('ToDo')
     const todo = { value, complete: false}
     todoRef.push(todo)
-    addTodo(value);
     setValue("");
   };
-
 
   return (
     <form onSubmit={handleSubmit}>
@@ -52,54 +50,31 @@ function TodoForm({ addTodo }) {
 
 function App() {
   const [list, setList] = useState(null)
-  
-  
+    
   useEffect(() => {
     const todoRef = firebase.database().ref('ToDo')
     todoRef.on('value', snapshot => {
       const todos = snapshot.val()
       const todoList = []
       for(let id in todos){
-        todoList.push(todos[id])
+        todoList.push({id, ...todos[id]})
       }
       setList(todoList)
     })
   }, [])
   
 
-  const [todos, setTodos] = useState([
-    {
-      text: "To finish React project",
-      isCompleted: false
-    },
-    {
-      text: "To pass interview tomorrow",
-      isCompleted: false
-    },
-    {
-      text: "To complete design of landing",
-      isCompleted: false
-    }
-  ]);
-
-  const addTodo = text => {
-    const newTodos = [...todos, { text }];
-    setTodos(newTodos);
+  const completeTodo = todo => {
+  const todoRef = firebase.database().ref('ToDo').child(todo.id)
+  todoRef.update({ complete: !todo.complete})
   };
 
-  
-  const completeTodo = index => {
-    const newTodos = [...todos];
-    newTodos[index].isCompleted = true;
-    setTodos(newTodos);
+  const removeTodo = todo => {
+    const todoRef = firebase.database().ref('ToDo').child(todo.id)
+    todoRef.remove()
   };
 
-  const removeTodo = index => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
-  };
- console.log(list);
+  console.log(list);
 
 
   return (
@@ -108,7 +83,7 @@ function App() {
           <h1 className="list-title">HELLO, KATIA! LIFE IS A BIG TO DO LIST</h1>
     <div className="app">
       <div className="todo-list">
-        {todos.map((todo, index) => (
+        {list?.map((todo, index) => (
           <Todo
             key={index}
             index={index}
@@ -117,7 +92,7 @@ function App() {
             removeTodo={removeTodo}
           />
         ))}
-        <TodoForm addTodo={addTodo} />
+        <TodoForm />
       </div>
     </div>
   </section>
